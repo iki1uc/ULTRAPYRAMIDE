@@ -1,1 +1,31 @@
+const PYRAMIDE_AI_AUTOPILOT_EXT = {
+    autopilotState: {},
 
+    update() {
+        const strategy = PYRAMIDE_AI_AUTOPILOT_STRATEGY.chooseStrategy();
+
+        switch(strategy) {
+            case "RAW-Stabilisierung": this.balanceEnergy(); break;
+            case "Energie-Optimierung": this.balanceEnergy(); break;
+            case "Orbit-Navigation": this.navigateOrbit(); break;
+            case "Operator-Matching": this.optimizeOperator(); break;
+            case "Stationen-Routing": this.routeStation(); break;
+            case "GhostError-Block": this.stabilizeMeta(); break;
+            case "TECH6E-Reparatur": this.repairTECH6E(); break;
+            case "KI-Analyse": PYRAMIDE_AI_TRAIN.collectAll(); break;
+            case "ULTRA-Autopilot":
+                this.navigateOrbit();
+                this.routeStation();
+                this.optimizeOperator();
+                this.balanceEnergy();
+                this.stabilizeMeta();
+                this.repairTECH6E();
+                PYRAMIDE_AI_TRAIN.collectAll();
+                break;
+        }
+    },
+
+    loop(interval = 2000) {
+        setInterval(() => this.update(), interval);
+    }
+};
