@@ -1,0 +1,6 @@
+﻿Fehler,Korrektur,Warum
+6E → 6D falsch,6E → 6D.in / 6D → 6E.out,Energie ↔ Raum
+ULTRA‑STATIONEN leer,ULTRA‑STATIONEN = Σ(Stationen[0…320.raw]),Stationen‑Geometrie
+ENGINE‑NC.³,ENGINE‑NC.²,NC² statt NC³
+NC.rawator,NC.raw,Fremdmodul
+NC.³,NC²,Dual‑Stabilität
