@@ -1,0 +1,15 @@
+async function NC2Dual(input) {
+  const A = await CoreA.run(input);
+  const B = await CoreB.run(input);
+
+  const conflict = detectConflict(A, B);
+  const type = classifyConflict(conflict);
+  const strategy = chooseStrategy(type);
+
+  const fused = fuse(A, B, strategy);
+  const aligned = alignOutput(fused);
+
+  HyperTraining.addSample({ conflict, type, strategy, fused });
+
+  return aligned;
+}
