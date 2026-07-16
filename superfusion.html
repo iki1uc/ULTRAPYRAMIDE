@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<title>NC²‑Superfusion – GUI</title>
+
+<style>
+  body {
+    background:#0d0d0d;
+    color:#eee;
+    font-family:Arial, sans-serif;
+    margin:0;
+    padding:0;
+  }
+
+  #topbar {
+    background:#111;
+    padding:15px;
+    border-bottom:2px solid #333;
+    text-align:center;
+    font-size:22px;
+    font-weight:bold;
+  }
+
+  #grid {
+    display:grid;
+    grid-template-columns: 1fr 1fr;
+    gap:20px;
+    padding:20px;
+  }
+
+  .panel {
+    background:#1a1a1a;
+    border:1px solid #333;
+    padding:15px;
+    border-radius:6px;
+  }
+
+  .panel h2 {
+    margin-top:0;
+    color:#00ff88;
+  }
+
+  .value {
+    font-size:18px;
+    color:#ffcc00;
+  }
+
+  #superfusion-btn {
+    width:100%;
+    padding:15px;
+    background:#00ff88;
+    color:#000;
+    font-size:20px;
+    border:none;
+    cursor:pointer;
+    margin-top:20px;
+    border-radius:6px;
+  }
+
+  #superfusion-btn:hover {
+    background:#00cc66;
+  }
+
+  #log {
+    background:#000;
+    color:#0f0;
+    padding:10px;
+    margin:20px;
+    height:150px;
+    overflow-y:auto;
+    font-family:Consolas;
+    border:1px solid #0f0;
+  }
+</style>
+</head>
+
+<body>
+
+<div id="topbar">NC²‑Superfusion – GUI</div>
+
+<div id="grid">
+
+  <div class="panel">
+    <h2>Orbit‑Energie</h2>
+    <div class="value" id="orbit">–</div>
+  </div>
+
+  <div class="panel">
+    <h2>Fraktal‑Level</h2>
+    <div class="value" id="fractal">–</div>
+  </div>
+
+  <div class="panel">
+    <h2>Meta‑Drift</h2>
+    <div class="value" id="meta">–</div>
+  </div>
+
+  <div class="panel">
+    <h2>Cluster‑Divergenz</h2>
+    <div class="value" id="cluster">–</div>
+  </div>
+
+  <div class="panel">
+    <h2>NC²‑Pipeline</h2>
+    <div id="pipeline">
+      <p>dual → merge → align → fusion → superfusion</p>
+    </div>
+  </div>
+
+  <div class="panel">
+    <h2>Konfliktachsen (15D)</h2>
+    <div id="axes"></div>
+  </div>
+
+</div>
+
+<button id="superfusion-btn">NC²‑Superfusion starten</button>
+
+<div id="log"></div>
+
+<script src="auto-loader.js"></script>
+<script src="nc2-visual.js"></script>
+
+<script>
+// ------------------------------------------------------
+// LOG
+// ------------------------------------------------------
+function log(msg){
+  const l = document.getElementById("log");
+  l.innerHTML += msg + "<br>";
+  l.scrollTop = l.scrollHeight;
+}
+
+// ------------------------------------------------------
+// DUMMY NC²‑DATEN (werden später durch echte Module ersetzt)
+// ------------------------------------------------------
+const NC2 = {
+  orbit: 0.88,
+  fractal: 0.42,
+  meta: 0.12,
+  cluster: 0.03,
+  axes: {
+    semantic:0.1, technical:0.2, logic:0.3, structure:0.1,
+    context:0.2, risk:0.05, orbit:0.88, vector:0.77,
+    align:0.91, meta:0.12, fractal:0.42, gradient:0.33,
+    temporal:0.14, cluster:0.03, entropy:0.22
+  }
+};
+
+// ------------------------------------------------------
+// GUI UPDATE
+// ------------------------------------------------------
+function updateGUI(){
+  document.getElementById("orbit").innerText = NC2.orbit;
+  document.getElementById("fractal").innerText = NC2.fractal;
+  document.getElementById("meta").innerText = NC2.meta;
+  document.getElementById("cluster").innerText = NC2.cluster;
+
+  const axesDiv = document.getElementById("axes");
+  axesDiv.innerHTML = "";
+
+  for(const [k,v] of Object.entries(NC2.axes)){
+    axesDiv.innerHTML += `<p>${k}: <span class="value">${v}</span></p>`;
+  }
+}
+
+// ------------------------------------------------------
+// SUPERFUSION BUTTON
+// ------------------------------------------------------
+document.getElementById("superfusion-btn").onclick = () => {
+  log(">> Superfusion gestartet…");
+
+  // Beispiel: Orbit‑Boost
+  NC2.orbit = (NC2.orbit + 0.05).toFixed(2);
+
+  // Beispiel: Meta‑Drift‑Kompensation
+  NC2.meta = (NC2.meta * 0.8).toFixed(2);
+
+  // Beispiel: Fraktal‑Stabilisierung
+  NC2.fractal = (NC2.fractal * 0.9).toFixed(2);
+
+  updateGUI();
+  log(">> Superfusion abgeschlossen.");
+};
+
+// ------------------------------------------------------
+// START
+// ------------------------------------------------------
+updateGUI();
+log(">> NC²‑Superfusion‑GUI geladen.");
+</script>
+
+</body>
+</html>
