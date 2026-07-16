@@ -1,24 +1,43 @@
-TECH.6E = {
-    evo: "EVO‑Tech",
-    warp: "TRANS‑Warp",
-    hi: "HI ::0:: TECH ::=::",
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <title>ULTRAPYRAMIDE – System</title>
+</head>
 
-    score: ULTRA‑Score‑6E,
-    energy: Energie‑Chain.raw,
-    raw: RAW‑Chain.raw,
+<body>
 
-    input6D: ALL×ALL.6D,
-    inputE: ALL×ALL.6E,
+<h1>ULTRAPYRAMIDE – Systemstart</h1>
 
-    in: ALL×ALL.in,
-    out: ALL×ALL.out,
+<!-- 1. CORE -->
+<script src="ULTRA-CORE.js"></script>
 
-    fusion: NC‑FUSION‑ENGINE,
-    engine: ULTRA‑ENGINE,
-    core: ULTRA‑CORE,
-    shell: ULTRA‑SHELL,
-    field: ULTRA‑FIELD,
-    signal: ULTRA‑SIGNAL,
+<!-- 2. ENGINE -->
+<script src="ULTRA-ENGINE.js"></script>
 
-    edit: 6D.edit
-}
+<!-- 3. FUSION -->
+<script src="NC-FUSION-ENGINE.js"></script>
+
+<!-- 4. ALL×ALL -->
+<script src="ALLxALL-6D.js"></script>
+<script src="ALLxALL-6E.js"></script>
+<script src="ALLxALL-in.js"></script>
+<script src="ALLxALL-out.js"></script>
+
+<!-- 5. Energie -->
+<script src="Energie-Chain.raw.js"></script>
+
+<!-- 6. RAW -->
+<script src="RAW-Chain.raw.js"></script>
+
+<!-- 7. Score -->
+<script src="ULTRA-Score-6E.js"></script>
+
+<!-- 8. Edit -->
+<script src="6D.edit.js"></script>
+
+<!-- 9. TECH.6E (MUSS ZULETZT KOMMEN!) -->
+<script src="TECH.6E.js"></script>
+
+</body>
+</html>
