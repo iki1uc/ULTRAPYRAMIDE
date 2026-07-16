@@ -19,7 +19,13 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 
-<script>
+<script><script type="module">
+  import { NC2_Repair3D } from "./raw/NC2-auto-repair-3d.js";
+  import { ARE } from "./raw/NC2-auto-repair-engine.js";
+
+  NC2_Repair3D(ARE);
+</script>
+
 // ------------------------------------------------------
 // SCENE
 // ------------------------------------------------------
