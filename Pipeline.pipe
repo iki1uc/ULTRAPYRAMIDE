@@ -1,1 +1,13 @@
+async function NC2DualFusionMatrix(outA, outB) {
+  const parts = detectFusionParts(outA, outB);
+  const type = classifyFusion(parts);
+  const intensity = fusionIntensity(parts);
+  const weights = weightOutputs(outA, outB);
+  const seg = segment(outA, outB);
 
+  const fused = synthesize(outA, outB, type, weights, seg);
+
+  HyperTraining.addSample({ type, intensity, weights, seg, fused });
+
+  return fused;
+}
