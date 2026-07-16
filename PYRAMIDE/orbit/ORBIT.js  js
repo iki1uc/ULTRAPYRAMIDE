@@ -1,0 +1,41 @@
+const ORBIT = {
+    version: "1.0",
+    list: [],
+
+    init() {
+        for (let n = 1; n <= 9; n++) {
+            this.list.push(this.buildOrbit(n));
+        }
+        console.log("ORBIT: 9 Orbit-Zustände erzeugt");
+    },
+
+    buildOrbit(n) {
+        return {
+            id: `O${n}`,
+            rev: n * 1.0,
+            geometry: this.getGeometry(n),
+            energy: this.getEnergy(n),
+            raw: this.getRaw(n),
+            station: this.getStation(n),
+            status: "ACTIVE"
+        };
+    },
+
+    getGeometry(n) {
+        return PYRAMIDE_STATIONEN.hardware[n]?.HardwareForm || "UNKNOWN";
+    },
+
+    getEnergy(n) {
+        return Energie_Chain.raw || "RAW";
+    },
+
+    getRaw(n) {
+        return RAW_Chain.raw || "RAW";
+    },
+
+    getStation(n) {
+        return PYRAMIDE_STATIONEN.buildStation(n);
+    }
+};
+
+ORBIT.init();
