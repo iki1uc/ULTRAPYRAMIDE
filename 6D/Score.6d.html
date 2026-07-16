@@ -1,0 +1,26 @@
+const PYRAMIDE_AI_MODEL = {
+    predictNextOrbit() {
+        const energies = ORBIT.list.map(o => o.energy.length);
+        const maxIndex = energies.indexOf(Math.max(...energies));
+        return ORBIT.list[maxIndex].id;
+    },
+
+    detectGhostError() {
+        return META.GhostError.includes("Instabilität");
+    },
+
+    matchOperatorToHardware(form) {
+        const map = {
+            "VECTOR": "⊙",
+            "PLANE": "⊖",
+            "CUBE": "⊕",
+            "CYLINDER": "⊗",
+            "TORUS": "⊘"
+        };
+        return map[form] || "?";
+    },
+
+    predictEnergyScore() {
+        return ULTRA_Score_6E.score;
+    }
+};
