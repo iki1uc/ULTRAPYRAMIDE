@@ -1,0 +1,17 @@
+function detectFusionParts(A, B) {
+  return {
+    semantic: A.text !== B.text,
+    technical: A.tech !== B.tech,
+    logic: A.logic !== B.logic,
+    structure: A.structure !== B.structure,
+    context: A.context !== B.context,
+    risk: A.risk !== B.risk,
+    orbit: A.orbitEnergy !== B.orbitEnergy,
+    vector: A.vec9 !== B.vec9,
+    align: A.align !== B.align,
+    meta: A.meta !== B.meta,
+    fractal: A.fractal !== B.fractal,
+    gradient: A.energyGradient !== B.energyGradient,
+    temporal: A.timestamp !== B.timestamp
+  };
+}
