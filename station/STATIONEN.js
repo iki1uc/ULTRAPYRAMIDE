@@ -6,11 +6,9 @@ PYRAMIDE_STATIONEN.calculateConflicts = function() {
         totalConflict += conflict;
     });
 
-    // Normierung auf 0–100
     const fractalLevel = Math.min(100, totalConflict / this.levels.length);
 
-    // Radar‑Engine.fit liest diesen Wert
     window.FRACTAL = { LEVEL: fractalLevel };
 
-    console.log("Fraktal-Level gesetzt:", fractalLevel);
+    console.log("Fraktal-Level:", fractalLevel);
 };
