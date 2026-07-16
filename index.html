@@ -1,43 +1,79 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-    <meta charset="UTF-8">
-    <title>ULTRAPYRAMIDE – System</title>
+<meta charset="UTF-8">
+<title>ULTRAPYRAMIDE – System</title>
+
+<style>
+  body { background:#111; color:#eee; font-family:Arial; }
+  h1 { text-align:center; padding:20px; }
+  #log { padding:20px; white-space:pre-wrap; }
+</style>
 </head>
 
 <body>
 
 <h1>ULTRAPYRAMIDE – Systemstart</h1>
+<div id="log">Lade Module…</div>
 
-<!-- 1. CORE -->
-<script src="ULTRA-CORE.js"></script>
+<script>
+async function loadScript(path){
+  return new Promise((resolve,reject)=>{
+    const s = document.createElement("script");
+    s.src = path;
+    s.onload = ()=>resolve({ok:true, path});
+    s.onerror = ()=>resolve({ok:false, path});
+    document.body.appendChild(s);
+  });
+}
 
-<!-- 2. ENGINE -->
-<script src="ULTRA-ENGINE.js"></script>
+async function loadFolder(folder){
+  const log = document.getElementById("log");
+  log.innerHTML += `\nScanne Ordner: ${folder}`;
 
-<!-- 3. FUSION -->
-<script src="NC-FUSION-ENGINE.js"></script>
+  // GitHub Pages kann kein Directory Listing → statische Liste
+  const FILES = [
+    "PYRAMIDE_AI.autopilot.js",
+    "PYRAMIDE_AI.train.js",
+    "PYRAMIDE_StabilityMonitor.js",
+    "TECH6E.autorepair.js",
+    "ORBIT.js",
+    "META.js",
+    "RAW.visual.js",
+    "STATIONEN.js",
+    "station-loader.js",
+    "TECH.debug.js",
+    "TECH6E.deepdebug.js"
+  ];
 
-<!-- 4. ALL×ALL -->
-<script src="ALLxALL-6D.js"></script>
-<script src="ALLxALL-6E.js"></script>
-<script src="ALLxALL-in.js"></script>
-<script src="ALLxALL-out.js"></script>
+  for(const f of FILES){
+    const path = `${folder}/${f}`;
+    const res = await loadScript(path);
+    log.innerHTML += `\n${res.ok ? "✔" : "✖"} ${path}`;
+  }
+}
 
-<!-- 5. Energie -->
-<script src="Energie-Chain.raw.js"></script>
+async function start(){
+  const log = document.getElementById("log");
+  log.innerHTML = "Starte ULTRAPYRAMIDE…";
 
-<!-- 6. RAW -->
-<script src="RAW-Chain.raw.js"></script>
+  await loadScript("ULTRA-CORE.js");
+  await loadScript("ULTRA-ENGINE.js");
+  await loadScript("NC-FUSION-ENGINE.js");
 
-<!-- 7. Score -->
-<script src="ULTRA-Score-6E.js"></script>
+  await loadFolder("orbit");
+  await loadFolder("tech");
+  await loadFolder("ai");
+  await loadFolder("raw");
+  await loadFolder("energy");
+  await loadFolder("station");
+  await loadFolder("meta");
 
-<!-- 8. Edit -->
-<script src="6D.edit.js"></script>
+  log.innerHTML += "\n\nSystem geladen.";
+}
 
-<!-- 9. TECH.6E (MUSS ZULETZT KOMMEN!) -->
-<script src="TECH.6E.js"></script>
+start();
+</script>
 
 </body>
 </html>
