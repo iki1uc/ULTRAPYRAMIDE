@@ -17,15 +17,19 @@
 
 <div id="hud">ULTRAPYRAMIDE – 3D<br>Status: Lädt…</div>
 
+<!-- THREE.js -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 
-<script><script type="module">
+<!-- NC² Auto‑Repair 3D Visualizer -->
+<script type="module">
   import { NC2_Repair3D } from "./raw/NC2-auto-repair-3d.js";
   import { ARE } from "./raw/NC2-auto-repair-engine.js";
 
+  // Startet den 3D‑Systemmonitor
   NC2_Repair3D(ARE);
 </script>
 
+<script>
 // ------------------------------------------------------
 // SCENE
 // ------------------------------------------------------
@@ -44,7 +48,7 @@ renderer.setSize(window.innerWidth, window.innerHeight);
 document.body.appendChild(renderer.domElement);
 
 // ------------------------------------------------------
-// PYRAMIDE (ULTRAPYRAMIDE)
+// PYRAMIDE
 // ------------------------------------------------------
 const geometry = new THREE.ConeGeometry(2, 3, 4);
 const material = new THREE.MeshBasicMaterial({
@@ -54,7 +58,7 @@ const pyramid = new THREE.Mesh(geometry, material);
 scene.add(pyramid);
 
 // ------------------------------------------------------
-// ORBIT-ENERGIE-RINGE
+// ORBIT‑ENERGIE‑RINGE
 // ------------------------------------------------------
 function createOrbit(radius, color){
   const geo = new THREE.RingGeometry(radius-0.02, radius+0.02, 64);
@@ -69,7 +73,7 @@ scene.add(createOrbit(3.0, 0xff00aa));
 scene.add(createOrbit(3.5, 0xffff00));
 
 // ------------------------------------------------------
-// FRAKTAL-KONFLIKTFELDER (Punktewolke)
+// FRAKTAL‑KONFLIKTFELDER
 // ------------------------------------------------------
 const fractalGeo = new THREE.BufferGeometry();
 const fractalPoints = [];
@@ -95,7 +99,7 @@ const fractal = new THREE.Points(fractalGeo, fractalMat);
 scene.add(fractal);
 
 // ------------------------------------------------------
-// NC²-PIPELINE-LINIE
+// NC²‑PIPELINE‑LINIE
 // ------------------------------------------------------
 const pipelineMat = new THREE.LineBasicMaterial({ color:0x00ff00 });
 const pipelineGeo = new THREE.BufferGeometry().setFromPoints([
@@ -115,21 +119,4 @@ function animate(){
   pyramid.rotation.y += 0.01;
   fractal.rotation.y -= 0.002;
 
-  renderer.render(scene, camera);
-}
-animate();
-
-// ------------------------------------------------------
-// HUD UPDATE
-// ------------------------------------------------------
-document.getElementById("hud").innerHTML =
-  "ULTRAPYRAMIDE – 3D<br>" +
-  "Orbit: stabil<br>" +
-  "Fraktal: aktiv<br>" +
-  "NC²-Pipeline: verbunden<br>" +
-  "Cluster: synchron<br>" +
-  "Meta-Drift: kompensiert";
-</script>
-
-</body>
-</html>
+  renderer
