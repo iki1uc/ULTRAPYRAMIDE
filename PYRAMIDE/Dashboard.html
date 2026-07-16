@@ -1,113 +1,19 @@
-<!DOCTYPE html>
-<html lang="de">
-<head>
-<meta charset="UTF-8">
-<title>ULTRA PYRAMIDE – Dashboard</title>
-
-<style>
-    body {
-        background:#000;
-        color:#0f0;
-        font-family:monospace;
-        padding:20px;
-    }
-    h1 { color:#6cf; }
-    .section {
-        border:1px solid #333;
-        padding:15px;
-        margin-bottom:20px;
-        background:#111;
-    }
-    .title {
-        color:#6cf;
-        font-size:20px;
-        margin-bottom:10px;
-    }
-    .ok { color:#0f0; }
-    .fail { color:#f33; }
-</style>
-</head>
-
-<body>
-
-<h1>ULTRA PYRAMIDE – Dashboard</h1>
-
-<!-- CORE -->
 <div class="section">
-    <div class="title">CORE</div>
-    <div id="core-status"></div>
+    <div class="title">Energie Visualisierung</div>
+    <canvas id="energyCanvas" width="400" height="300"></canvas>
 </div>
 
-<!-- ENGINE -->
 <div class="section">
-    <div class="title">ENGINE</div>
-    <div id="engine-status"></div>
+    <div class="title">Meta System</div>
+    <canvas id="metaCanvas" width="400" height="300"></canvas>
 </div>
 
-<!-- FIELD -->
 <div class="section">
-    <div class="title">FIELD</div>
-    <div id="field-status"></div>
+    <div class="title">TECH.6E Debug</div>
+    <pre id="techDebug"></pre>
 </div>
 
-<!-- ALL×ALL -->
 <div class="section">
-    <div class="title">ALL×ALL Routing</div>
-    <div id="all-status"></div>
+    <div class="title">RAW Visualisierung</div>
+    <canvas id="rawCanvas" width="400" height="300"></canvas>
 </div>
-
-<!-- ENERGY -->
-<div class="section">
-    <div class="title">ENERGY</div>
-    <div id="energy-status"></div>
-</div>
-
-<!-- TECH -->
-<div class="section">
-    <div class="title">TECH.6E</div>
-    <div id="tech-status"></div>
-</div>
-
-<script>
-function check(name, variable) {
-    return variable ? `<span class="ok">${name} ✔</span>` 
-                    : `<span class="fail">${name} ✖</span>`;
-}
-
-document.getElementById("core-status").innerHTML = `
-    ${check("ULTRA-CORE", window.ULTRA_CORE)}
-    <br>${check("ULTRA-ENGINE", window.ULTRA_ENGINE)}
-    <br>${check("NC-FUSION-ENGINE", window.NC_FUSION_ENGINE)}
-`;
-
-document.getElementById("engine-status").innerHTML = `
-    ${check("ULTRA-ENGINE", window.ULTRA_ENGINE)}
-`;
-
-document.getElementById("field-status").innerHTML = `
-    ${check("ULTRA-SHELL", window.ULTRA_SHELL)}
-    <br>${check("ULTRA-FIELD", window.ULTRA_FIELD)}
-    <br>${check("ULTRA-SIGNAL", window.ULTRA_SIGNAL)}
-`;
-
-document.getElementById("all-status").innerHTML = `
-    ${check("ALLxALL-6D", window.ALLxALL_6D)}
-    <br>${check("ALLxALL-6E", window.ALLxALL_6E)}
-    <br>${check("ALLxALL-IN", window.ALLxALL_in)}
-    <br>${check("ALLxALL-OUT", window.ALLxALL_out)}
-`;
-
-document.getElementById("energy-status").innerHTML = `
-    ${check("Energie-Chain.raw", window.Energie_Chain)}
-    <br>${check("RAW-Chain.raw", window.RAW_Chain)}
-    <br>${check("ULTRA-Score-6E", window.ULTRA_Score_6E)}
-    <br>${check("6D.edit", window.EDIT_6D)}
-`;
-
-document.getElementById("tech-status").innerHTML = `
-    ${check("TECH.6E", window.TECH_6E)}
-`;
-</script>
-
-</body>
-</html>
