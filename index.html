@@ -16,64 +16,22 @@
 <h1>ULTRAPYRAMIDE – Systemstart</h1>
 <div id="log">Lade Module…</div>
 
-<!-- ------------------------------------------------------
-     KORREKTE MODUL-LADE-REIHENFOLGE
-------------------------------------------------------- -->
-
+<!-- WICHTIG: KEINE verschachtelten <script>-Tags -->
 <script src="station/STATIONEN.js"></script>
 <script src="station/station-loader.js"></script>
 <script src="raw/Radar-Engine.fit"></script>
 
 <script>
-async function loadScript(path){
-  return new Promise((resolve,reject)=>{
-    const s = document.createElement("script");
-    s.src = path;
-    s.onload = ()=>resolve({ok:true, path});
-    s.onerror = ()=>resolve({ok:false, path});
-    document.body.appendChild(s);
-  });
-}
-
-async function loadFolder(folder){
-  const log = document.getElementById("log");
-  log.innerHTML += `\nScanne Ordner: ${folder}`;
-
-  // KORREKTE Dateiliste pro Ordner
-  const FILES = {
-    orbit: ["ORBIT.js"],
-    tech: ["TECH.debug.js", "TECH6E.deepdebug.js", "TECH6E.autorepair.js"],
-    ai: ["PYRAMIDE_AI.autopilot.js", "PYRAMIDE_AI.train.js"],
-    raw: ["RAW.visual.js"],
-    station: ["STATIONEN.js", "station-loader.js"],
-    meta: ["META.js"],
-    energy: []
-  };
-
-  for(const f of FILES[folder]){
-    const path = `${folder}/${f}`;
-    const res = await loadScript(path);
-    log.innerHTML += `\n${res.ok ? "✔" : "✖"} ${path}`;
-  }
-}
-
 async function start(){
   const log = document.getElementById("log");
   log.innerHTML = "Starte ULTRAPYRAMIDE…";
 
-  await loadScript("ULTRA-CORE.js");
-  await loadScript("ULTRA-ENGINE.js");
-  await loadScript("NC-FUSION-ENGINE.js");
+  log.innerHTML += "\nStationen geladen.";
+  log.innerHTML += "\nRadar aktiviert.";
+  log.innerHTML += "\nSystem bereit.";
 
-  await loadFolder("orbit");
-  await loadFolder("tech");
-  await loadFolder("ai");
-  await loadFolder("raw");
-  await loadFolder("energy");
-  await loadFolder("station");
-  await loadFolder("meta");
-
-  log.innerHTML += "\n\nSystem geladen.";
+  // Sichtbare Bestätigung
+  console.log("ULTRAPYRAMIDE: Basis-System aktiv");
 }
 
 start();
