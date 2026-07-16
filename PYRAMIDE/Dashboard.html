@@ -2,7 +2,7 @@
 <html lang="de">
 <head>
 <meta charset="UTF-8">
-<title>PYRAMIDE Dashboard – Erweiterung</title>
+<title>PYRAMIDE – Gesamt Visualisierung</title>
 
 <style>
     body { background:#000; color:#0f0; font-family:monospace; padding:20px; }
@@ -13,24 +13,37 @@
         margin-bottom:20px;
         background:#111;
     }
-    .title { color:#6cf; font-size:20px; margin-bottom:10px; }
+    .title { color:#6cf; font-size:22px; margin-bottom:10px; }
+    canvas { background:#111; border:1px solid #333; margin-top:10px; }
 </style>
 </head>
 
 <body>
 
-<h1>PYRAMIDE Dashboard – Erweiterung</h1>
+<h1>PYRAMIDE – Gesamt Visualisierung</h1>
+
+<div class="panel"><div class="title">System‑Status</div><pre id="systemStatus"></pre></div>
 
 <div class="panel"><div class="title">CORE / ENGINE / FUSION</div><div id="corePanel"></div></div>
+
 <div class="panel"><div class="title">FIELD</div><div id="fieldPanel"></div></div>
+
 <div class="panel"><div class="title">ALL×ALL Routing</div><div id="allPanel"></div></div>
+
 <div class="panel"><div class="title">ENERGIE</div><canvas id="energyCanvas" width="400" height="300"></canvas></div>
+
 <div class="panel"><div class="title">RAW</div><canvas id="rawCanvas" width="400" height="300"></canvas></div>
+
 <div class="panel"><div class="title">ORBIT Visualisierung</div><canvas id="orbitCanvas" width="1000" height="600"></canvas></div>
+
 <div class="panel"><div class="title">Operator Visualisierung</div><canvas id="operatorCanvas" width="800" height="200"></canvas></div>
+
 <div class="panel"><div class="title">Hardware Visualisierung</div><canvas id="hardwareCanvas" width="900" height="200"></canvas></div>
+
 <div class="panel"><div class="title">Stationen (128)</div><canvas id="stationCanvas" width="640" height="320"></canvas></div>
+
 <div class="panel"><div class="title">META System</div><canvas id="metaCanvas" width="400" height="300"></canvas></div>
+
 <div class="panel"><div class="title">TECH.6E Debug</div><pre id="techDebug"></pre></div>
 
 <script src="orbit/ORBIT.visual.js"></script>
@@ -46,8 +59,7 @@
 
 <script>
 function check(name, variable) {
-    return variable ? `<span style="color:#0f0">${name} ✔</span>` :
-                      `<span style="color:#f33">${name} ✖</span>`;
+    return variable ? `${name}: OK` : `${name}: FEHLT`;
 }
 
 document.getElementById("corePanel").innerHTML = `
@@ -71,6 +83,23 @@ document.getElementById("allPanel").innerHTML = `
 
 document.getElementById("techDebug").innerText =
     JSON.stringify(TECH_DEBUG.report(), null, 2);
+
+document.getElementById("systemStatus").innerText = `
+PYRAMIDE STATUS:
+CORE: ${check("ULTRA-CORE", window.ULTRA_CORE)}
+ENGINE: ${check("ULTRA-ENGINE", window.ULTRA_ENGINE)}
+FUSION: ${check("NC-FUSION-ENGINE", window.NC_FUSION_ENGINE)}
+FIELD: ${check("ULTRA-FIELD", window.ULTRA_FIELD)}
+ALL×ALL: ${check("ALLxALL-6D", window.ALLxALL_6D)}
+ENERGIE: ${check("Energie-Chain.raw", window.Energie_Chain)}
+RAW: ${check("RAW-Chain.raw", window.RAW_Chain)}
+TECH.6E: ${check("TECH.6E", window.TECH_6E)}
+STATIONEN: ${check("STATIONEN", window.PYRAMIDE_STATIONEN)}
+ORBIT: ${check("ORBIT", window.ORBIT)}
+OPERATOR: ${check("OPERATOR-VISUAL", window.OPERATOR_VISUAL)}
+HARDWARE: ${check("HARDWARE-VISUAL", window.HARDWARE_VISUAL)}
+META: ${check("META", window.META)}
+`;
 </script>
 
 </body>
