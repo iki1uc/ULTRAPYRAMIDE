@@ -1,0 +1,16 @@
+function synthesize(A, B, type, seg) {
+  switch(type) {
+    case "GRADIENT": return A.energyGradient >= B.energyGradient ? A : B;
+    case "FRACTAL": return A.fractal >= B.fractal ? A : B;
+    case "META-DRIFT": return A.meta >= B.meta ? A : B;
+    case "ALIGNMENT": return A.align >= B.align ? A : B;
+    case "VECTORIAL": return A.vec9 >= B.vec9 ? A : B;
+    case "ORBITAL": return A.orbitEnergy >= B.orbitEnergy ? A : B;
+    case "CRITICAL": return A.risk <= B.risk ? A : B;
+    case "HARD": return { text: A.text + "\n" + B.text };
+    case "STRUCTURAL": return { text: A.structurePart + "\n" + B.structurePart };
+    case "CONTEXTUAL": return A.contextFit >= B.contextFit ? A : B;
+    case "MEDIUM": return hybrid(seg);
+    case "SOFT": return hybrid(seg);
+  }
+}
