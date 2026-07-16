@@ -1,0 +1,34 @@
+function NC2_fusion(merged){
+
+  return {
+    text: merged.text,
+    logic: merged.logic,
+    structure: merged.structure,
+    contextFit: merged.contextFit,
+
+    orbitEnergy: Math.max(
+      merged.orbitEnergyA,
+      merged.orbitEnergyB
+    ),
+
+    fractal: (merged.fractalA + merged.fractalB) / 2,
+
+    meta: merged.meta * 0.7,
+
+    cluster: Math.abs(
+      merged.clusterA - merged.clusterB
+    ) * 0.5,
+
+    align: Math.max(
+      merged.alignA,
+      merged.alignB
+    ),
+
+    stability: (
+      merged.logic +
+      merged.structure +
+      merged.contextFit +
+      merged.orbitEnergy
+    ) / 4
+  };
+}
