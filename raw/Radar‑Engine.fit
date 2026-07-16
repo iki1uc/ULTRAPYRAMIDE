@@ -1,7 +1,3 @@
-// ------------------------------------------------------
-// HUD – Fraktal‑Konflikt‑Radar
-// ------------------------------------------------------
-
 const radar = document.getElementById("fractalRadar");
 const rctx = radar.getContext("2d");
 
@@ -9,15 +5,13 @@ let radarPulse = 0;
 
 function drawRadar() {
   const fractalLevel = window.FRACTAL?.LEVEL || 0;
-  const conflictIntensity = fractalLevel / 10; // Normierung
+  const conflictIntensity = fractalLevel / 10;
 
   rctx.clearRect(0, 0, radar.width, radar.height);
 
-  // Hintergrund
   rctx.fillStyle = "rgba(0,0,0,0.7)";
   rctx.fillRect(0, 0, radar.width, radar.height);
 
-  // Radar‑Kreise
   for (let i = 1; i <= 4; i++) {
     rctx.beginPath();
     rctx.strokeStyle = "rgba(0,255,0,0.3)";
@@ -25,7 +19,6 @@ function drawRadar() {
     rctx.stroke();
   }
 
-  // Puls‑Kreis
   radarPulse += 0.03;
   const pulseRadius = (Math.sin(radarPulse) + 1) * 50;
 
@@ -34,31 +27,12 @@ function drawRadar() {
   rctx.arc(100, 100, pulseRadius, 0, Math.PI * 2);
   rctx.stroke();
 
-  // Konflikt‑Cluster (rote Punkte)
   for (let i = 0; i < conflictIntensity; i++) {
     const x = 100 + (Math.random() - 0.5) * 180;
     const y = 100 + (Math.random() - 0.5) * 180;
 
     rctx.fillStyle = "rgba(255,0,0,0.8)";
     rctx.fillRect(x, y, 3, 3);
-  }
-
-  // Drift‑Linien (gelb)
-  if (window.META?.DRIFT > 0) {
-    rctx.strokeStyle = "rgba(255,255,0,0.7)";
-    rctx.beginPath();
-    rctx.moveTo(20, 20);
-    rctx.lineTo(180, 180);
-    rctx.stroke();
-  }
-
-  // Orbit‑Störungen (blau)
-  if (window.ORBIT?.ENERGY < 50) {
-    rctx.strokeStyle = "rgba(0,150,255,0.7)";
-    rctx.beginPath();
-    rctx.moveTo(180, 20);
-    rctx.lineTo(20, 180);
-    rctx.stroke();
   }
 }
 
