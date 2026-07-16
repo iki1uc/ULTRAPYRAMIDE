@@ -1,48 +1,14 @@
-const PYRAMIDE_STATIONEN = {
-    version: "1.0",
-    total: 128,
-    levels: [],
-    hardware: [],
-    operators: [],
-    ready: false,
+PYRAMIDE_STATIONEN.calculateConflicts = function() {
+    let totalConflict = 0;
 
-    init() {
-        console.log("PYRAMIDE-STATIONEN: Initialisiert");
-        this.ready = true;
-    },
+    this.levels.forEach((lvl, i) => {
+        const conflict = parseInt(lvl.conflict || 0);
+        totalConflict += conflict;
+    });
 
-    addLevel(level) {
-        this.levels.push(level);
-    },
+    // Normierung auf 0–100
+    const fractalLevel = Math.min(100, totalConflict / this.levels.length);
 
-    addHardware(hw) {
-        this.hardware.push(hw);
-    },
-
-    addOperator(op) {
-        this.operators.push(op);
-    },
-
-    buildStation(index) {
-        return {
-            id: index,
-            level: this.levels[index] || null,
-            hardware: this.hardware[index] || null,
-            operator: this.operators[index] || null,
-            orbit: `O${(index % 9) + 1}`,
-            geometry: this.hardware[index]?.form || "UNKNOWN",
-            raw: this.levels[index]?.raw || "RAW",
-            status: "ACTIVE"
-        };
-    },
-
-    buildAll() {
-        const stations = [];
-        for (let i = 0; i < this.total; i++) {
-            stations.push(this.buildStation(i));
-        }
-        return stations;
-    }
+    window.FRACTAL = { LEVEL: fractalLevel };
+    console.log("Fraktal-Level gesetzt:", fractalLevel);
 };
-
-PYRAMIDE_STATIONEN.init();
