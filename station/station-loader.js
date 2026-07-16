@@ -1,3 +1,6 @@
+// ------------------------------------------------------
+// CSV Loader
+// ------------------------------------------------------
 async function loadCSV(path) {
     const response = await fetch(path);
     const text = await response.text();
@@ -12,6 +15,9 @@ async function loadCSV(path) {
     });
 }
 
+// ------------------------------------------------------
+// Station Data Loader
+// ------------------------------------------------------
 async function loadStationData() {
     const levels = await loadCSV("station/level-pyramiden-7.csv");
     const hardware = await loadCSV("station/hardware-form-9.csv");
@@ -22,6 +28,10 @@ async function loadStationData() {
     operators.forEach(o => PYRAMIDE_STATIONEN.addOperator(o));
 
     console.log("PYRAMIDE-STATIONEN: Daten geladen");
+
+    // Konflikte berechnen → Radar bekommt echte Werte
+    PYRAMIDE_STATIONEN.calculateConflicts();
 }
 
+// Start
 loadStationData();
