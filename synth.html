@@ -1,0 +1,21 @@
+function synthesize(a, b, type, weights, seg) {
+  switch(type) {
+    case "CRITICAL":
+      return weights.A >= weights.B ? a : b;
+
+    case "HARD":
+      return { text: a.text + "\n" + b.text, weights };
+
+    case "STRUCTURAL":
+      return { text: a.structurePart + "\n" + b.structurePart };
+
+    case "CONTEXTUAL":
+      return weights.A >= weights.B ? a : b;
+
+    case "MEDIUM":
+      return hybrid(seg);
+
+    case "SOFT":
+      return hybrid(seg);
+  }
+}
