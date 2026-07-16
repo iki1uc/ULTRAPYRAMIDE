@@ -1,0 +1,18 @@
+                META (AXIOM)
+                   ▲ Z
+                   │
+          NC².sync │
+                   │
+        STRING6D   │
+                   │
+   station-geo-11  │
+                   │
+        6E → 6D    │
+                   │
+         LEVEL     │
+                   │
+         ROOT      ▼ Z
+
+   ◄─────────────── X ───────────────►
+                     │
+                     ▼ Y
