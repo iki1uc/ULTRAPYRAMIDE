@@ -1,19 +1,77 @@
-<div class="section">
-    <div class="title">Energie Visualisierung</div>
-    <canvas id="energyCanvas" width="400" height="300"></canvas>
-</div>
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<title>PYRAMIDE Dashboard – Erweiterung</title>
 
-<div class="section">
-    <div class="title">Meta System</div>
-    <canvas id="metaCanvas" width="400" height="300"></canvas>
-</div>
+<style>
+    body { background:#000; color:#0f0; font-family:monospace; padding:20px; }
+    h1 { color:#6cf; }
+    .panel {
+        border:1px solid #333;
+        padding:15px;
+        margin-bottom:20px;
+        background:#111;
+    }
+    .title { color:#6cf; font-size:20px; margin-bottom:10px; }
+</style>
+</head>
 
-<div class="section">
-    <div class="title">TECH.6E Debug</div>
-    <pre id="techDebug"></pre>
-</div>
+<body>
 
-<div class="section">
-    <div class="title">RAW Visualisierung</div>
-    <canvas id="rawCanvas" width="400" height="300"></canvas>
-</div>
+<h1>PYRAMIDE Dashboard – Erweiterung</h1>
+
+<div class="panel"><div class="title">CORE / ENGINE / FUSION</div><div id="corePanel"></div></div>
+<div class="panel"><div class="title">FIELD</div><div id="fieldPanel"></div></div>
+<div class="panel"><div class="title">ALL×ALL Routing</div><div id="allPanel"></div></div>
+<div class="panel"><div class="title">ENERGIE</div><canvas id="energyCanvas" width="400" height="300"></canvas></div>
+<div class="panel"><div class="title">RAW</div><canvas id="rawCanvas" width="400" height="300"></canvas></div>
+<div class="panel"><div class="title">ORBIT Visualisierung</div><canvas id="orbitCanvas" width="1000" height="600"></canvas></div>
+<div class="panel"><div class="title">Operator Visualisierung</div><canvas id="operatorCanvas" width="800" height="200"></canvas></div>
+<div class="panel"><div class="title">Hardware Visualisierung</div><canvas id="hardwareCanvas" width="900" height="200"></canvas></div>
+<div class="panel"><div class="title">Stationen (128)</div><canvas id="stationCanvas" width="640" height="320"></canvas></div>
+<div class="panel"><div class="title">META System</div><canvas id="metaCanvas" width="400" height="300"></canvas></div>
+<div class="panel"><div class="title">TECH.6E Debug</div><pre id="techDebug"></pre></div>
+
+<script src="orbit/ORBIT.visual.js"></script>
+<script src="operator/OPERATOR.visual.js"></script>
+<script src="hardware/HARDWARE.visual.js"></script>
+<script src="station/STATIONEN.js"></script>
+<script src="station/station-loader.js"></script>
+<script src="energy/ENERGY.visual.js"></script>
+<script src="raw/RAW.visual.js"></script>
+<script src="meta/META.js"></script>
+<script src="meta/META.visual.js"></script>
+<script src="tech/TECH.debug.js"></script>
+
+<script>
+function check(name, variable) {
+    return variable ? `<span style="color:#0f0">${name} ✔</span>` :
+                      `<span style="color:#f33">${name} ✖</span>`;
+}
+
+document.getElementById("corePanel").innerHTML = `
+    ${check("ULTRA-CORE", window.ULTRA_CORE)}<br>
+    ${check("ULTRA-ENGINE", window.ULTRA_ENGINE)}<br>
+    ${check("NC-FUSION-ENGINE", window.NC_FUSION_ENGINE)}
+`;
+
+document.getElementById("fieldPanel").innerHTML = `
+    ${check("ULTRA-SHELL", window.ULTRA_SHELL)}<br>
+    ${check("ULTRA-FIELD", window.ULTRA_FIELD)}<br>
+    ${check("ULTRA-SIGNAL", window.ULTRA_SIGNAL)}
+`;
+
+document.getElementById("allPanel").innerHTML = `
+    ${check("ALLxALL-6D", window.ALLxALL_6D)}<br>
+    ${check("ALLxALL-6E", window.ALLxALL_6E)}<br>
+    ${check("ALLxALL-IN", window.ALLxALL_in)}<br>
+    ${check("ALLxALL-OUT", window.ALLxALL_out)}
+`;
+
+document.getElementById("techDebug").innerText =
+    JSON.stringify(TECH_DEBUG.report(), null, 2);
+</script>
+
+</body>
+</html>
