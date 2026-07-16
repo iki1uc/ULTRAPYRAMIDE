@@ -1,0 +1,33 @@
+const PYRAMIDE_AI_TRAIN_VISUAL = {
+    canvas: null,
+    ctx: null,
+
+    init() {
+        this.canvas = document.getElementById("aiTrainCanvas");
+        this.ctx = this.canvas.getContext("2d");
+        this.drawTraining();
+        console.log("PYRAMIDE-AI-TRAIN-VISUAL: Aktiv");
+    },
+
+    drawTraining() {
+        const ctx = this.ctx;
+
+        ctx.fillStyle = "#0f0";
+        ctx.font = "20px monospace";
+        ctx.fillText("PYRAMIDE KI – Training", 20, 40);
+
+        ctx.fillStyle = "#6cf";
+        ctx.font = "14px monospace";
+        ctx.fillText(`Samples: ${PYRAMIDE_AI_TRAIN.samples.length}`, 20, 80);
+
+        ctx.fillText(`Next Orbit Prediction: ${PYRAMIDE_AI_MODEL.predictNextOrbit()}`, 20, 120);
+
+        ctx.fillStyle = META.GhostError.includes("Instabilität") ? "#f33" : "#0f0";
+        ctx.fillText(`GhostError: ${META.GhostError}`, 20, 160);
+
+        ctx.fillStyle = "#6cf";
+        ctx.fillText(`Energy Score: ${PYRAMIDE_AI_MODEL.predictEnergyScore()}`, 20, 200);
+    }
+};
+
+window.addEventListener("load", () => PYRAMIDE_AI_TRAIN_VISUAL.init());
