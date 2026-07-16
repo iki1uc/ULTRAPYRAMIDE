@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<title>ULTRAPYRAMIDE – 3D Visualisierung</title>
+<style>
+  body { margin:0; overflow:hidden; background:#000; }
+  #hud {
+    position:absolute; top:10px; left:10px;
+    color:#0f0; font-family:Consolas; font-size:14px;
+    background:rgba(0,0,0,0.5); padding:10px; border:1px solid #0f0;
+  }
+</style>
+</head>
+
+<body>
+
+<div id="hud">ULTRAPYRAMIDE – 3D<br>Status: Lädt…</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+<script>
+// ------------------------------------------------------
+// SCENE
+// ------------------------------------------------------
+const scene = new THREE.Scene();
+scene.background = new THREE.Color(0x000000);
+
+// CAMERA
+const camera = new THREE.PerspectiveCamera(
+  60, window.innerWidth/window.innerHeight, 0.1, 1000
+);
+camera.position.set(0, 2.5, 6);
+
+// RENDERER
+const renderer = new THREE.WebGLRenderer({ antialias:true });
+renderer.setSize(window.innerWidth, window.innerHeight);
+document.body.appendChild(renderer.domElement);
+
+// ------------------------------------------------------
+// PYRAMIDE (ULTRAPYRAMIDE)
+// ------------------------------------------------------
+const geometry = new THREE.ConeGeometry(2, 3, 4);
+const material = new THREE.MeshBasicMaterial({
+  color:0x00ff88, wireframe:true
+});
+const pyramid = new THREE.Mesh(geometry, material);
+scene.add(pyramid);
+
+// ------------------------------------------------------
+// ORBIT-ENERGIE-RINGE
+// ------------------------------------------------------
+function createOrbit(radius, color){
+  const geo = new THREE.RingGeometry(radius-0.02, radius+0.02, 64);
+  const mat = new THREE.MeshBasicMaterial({ color, side:THREE.DoubleSide });
+  const ring = new THREE.Mesh(geo, mat);
+  ring.rotation.x = Math.PI/2;
+  return ring;
+}
+
+scene.add(createOrbit(2.5, 0x00aaff));
+scene.add(createOrbit(3.0, 0xff00aa));
+scene.add(createOrbit(3.5, 0xffff00));
+
+// ------------------------------------------------------
+// FRAKTAL-KONFLIKTFELDER (Punktewolke)
+// ------------------------------------------------------
+const fractalGeo = new THREE.BufferGeometry();
+const fractalPoints = [];
+
+for(let i=0;i<500;i++){
+  fractalPoints.push(
+    (Math.random()-0.5)*6,
+    (Math.random()-0.5)*6,
+    (Math.random()-0.5)*6
+  );
+}
+
+fractalGeo.setAttribute(
+  'position',
+  new THREE.Float32BufferAttribute(fractalPoints, 3)
+);
+
+const fractalMat = new THREE.PointsMaterial({
+  color:0xff4444, size:0.03
+});
+
+const fractal = new THREE.Points(fractalGeo, fractalMat);
+scene.add(fractal);
+
+// ------------------------------------------------------
+// NC²-PIPELINE-LINIE
+// ------------------------------------------------------
+const pipelineMat = new THREE.LineBasicMaterial({ color:0x00ff00 });
+const pipelineGeo = new THREE.BufferGeometry().setFromPoints([
+  new THREE.Vector3(-3, -2, 0),
+  new THREE.Vector3(0, 0, 0),
+  new THREE.Vector3(3, 2, 0)
+]);
+const pipeline = new THREE.Line(pipelineGeo, pipelineMat);
+scene.add(pipeline);
+
+// ------------------------------------------------------
+// ANIMATION
+// ------------------------------------------------------
+function animate(){
+  requestAnimationFrame(animate);
+
+  pyramid.rotation.y += 0.01;
+  fractal.rotation.y -= 0.002;
+
+  renderer.render(scene, camera);
+}
+animate();
+
+// ------------------------------------------------------
+// HUD UPDATE
+// ------------------------------------------------------
+document.getElementById("hud").innerHTML =
+  "ULTRAPYRAMIDE – 3D<br>" +
+  "Orbit: stabil<br>" +
+  "Fraktal: aktiv<br>" +
+  "NC²-Pipeline: verbunden<br>" +
+  "Cluster: synchron<br>" +
+  "Meta-Drift: kompensiert";
+</script>
+
+</body>
+</html>
