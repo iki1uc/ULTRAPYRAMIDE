@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<title>ULTRAPYRAMIDE – Konsole</title>
+
+<style>
+  body { background:#000; color:#0f0; font-family:Consolas, monospace; }
+  #term {
+    width:100%; height:90vh; background:#000;
+    border:2px solid #0f0; padding:10px; overflow-y:auto;
+  }
+  #input {
+    width:100%; padding:10px; background:#001100;
+    color:#0f0; border:none; font-family:Consolas; font-size:16px;
+  }
+</style>
+</head>
+
+<body>
+
+<h1>ULTRAPYRAMIDE – Konsole</h1>
+<div id="term"></div>
+<input id="input" placeholder="Befehl eingeben…">
+
+<script>
+// TERMINAL OUTPUT
+function log(msg){
+  const t = document.getElementById("term");
+  t.innerHTML += msg + "<br>";
+  t.scrollTop = t.scrollHeight;
+}
+
+// AUTO‑LOADER ENGINE
+async function autoLoad(){
+  log(">> AUTO‑LOADER startet…");
+
+  const folders = [
+    "orbit","tech","ai","raw","energy","station","meta","hardware"
+  ];
+
+  const files = [
+    "ULTRA-CORE.js","ULTRA-ENGINE.js","NC-FUSION-ENGINE.js",
+    "ALLxALL-6D.js","ALLxALL-6E.js","ALLxALL-in.js","ALLxALL-out.js",
+    "Energie-Chain.raw.js","RAW-Chain.raw.js","ULTRA-Score-6E.js",
+    "6D.edit.js","TECH.6E.js"
+  ];
+
+  // LOAD ROOT FILES
+  for(const f of files){
+    await loadScript(f);
+  }
+
+  // LOAD FOLDERS
+  for(const folder of folders){
+    log(">> Scanne Ordner: " + folder);
+    await loadFolder(folder);
+  }
+
+  log(">> AUTO‑LOADER abgeschlossen.");
+}
+
+// LOAD SCRIPT
+async function loadScript(path){
+  return new Promise(resolve=>{
+    const s = document.createElement("script");
+    s.src = path;
+    s.onload = ()=>{ log("✔ geladen: " + path); resolve(true); };
+    s.onerror = ()=>{ log("✖ FEHLT: " + path); resolve(false); };
+    document.body.appendChild(s);
+  });
+}
+
+// LOAD FOLDER (STATIC LIST)
+async function loadFolder(folder){
+  const STATIC = [
+    "PYRAMIDE_AI.autopilot.js",
+    "PYRAMIDE_AI.train.js",
+    "PYRAMIDE_StabilityMonitor.js",
+    "TECH6E.autorepair.js",
+    "ORBIT.js",
+    "META.js",
+    "RAW.visual.js",
+    "STATIONEN.js",
+    "station-loader.js",
+    "TECH.debug.js",
+    "TECH6E.deepdebug.js"
+  ];
+
+  for(const f of STATIC){
+    await loadScript(`${folder}/${f}`);
+  }
+}
+
+// NC²‑PIPELINE VISUALISIERUNG
+function visualizeNC2(){
+  log(">> NC²‑Pipeline:");
+  log("   • NC²octa².dual → aktiv");
+  log("   • NC²octa²□.merge → aktiv");
+  log("   • NC²□octa³.align → aktiv");
+  log("   • Fusion‑Matrix FM‑15 → aktiv");
+  log("   • Konfliktlösung 15D → aktiv");
+  log("   • Orbit‑Gradient → stabil");
+  log("   • Fraktal‑Level → synchronisiert");
+  log("   • Meta‑Drift → kompensiert");
+}
+
+// COMMAND HANDLER
+document.getElementById("input").addEventListener("keydown", e=>{
+  if(e.key === "Enter"){
+    const cmd = e.target.value.trim();
+    e.target.value = "";
+    log(">> " + cmd);
+
+    if(cmd === "scan") visualizeNC2();
+    if(cmd === "orbit") log("Orbit‑Energie: " + (window.ORBIT?.ENERGY || "unbekannt"));
+    if(cmd === "nc2") visualizeNC2();
+    if(cmd === "dual") log("NC²‑dual: " + (window.NC2_DUAL?.STATUS || "aktiv"));
+    if(cmd === "merge") log("NC²‑merge: " + (window.NC2_MERGE?.STATUS || "aktiv"));
+    if(cmd === "superfusion") log("NC²‑Superfusion: aktiv");
+    if(cmd === "help") log("Befehle: scan, orbit, nc2, dual, merge, superfusion");
+  }
+});
+
+// START
+autoLoad();
+</script>
+
+</body>
+</html>
